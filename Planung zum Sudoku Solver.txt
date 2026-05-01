@@ -1,0 +1,6 @@
+Planung zum Sudoku Solver:
+
+ich denke ich sollte nochmal eine komplett neue Struktur bauen, wo auch das Sudoku ein eigenes neues Objekt ist. 
+Außerdem sollten die einzelnen Zellen nicht mit ihren Indizes aufeinander Zeigen, sondern direkte Referenzen haben
+ich glaube dadurch spart man sich sehr viel Performance beim aufgreifen der jeweils relevanten Zellen. 
+Man muss nur schauen, wie genau man es umsetzt, wenn eine Zelle sich geupdatet hat und die anderen, die diese referenzieren das mitbekommen 
