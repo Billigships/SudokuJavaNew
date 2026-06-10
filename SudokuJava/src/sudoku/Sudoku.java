@@ -26,7 +26,7 @@ public class Sudoku {
 	private void updateCellStatuses() {
 		for (Cell cell : Sudoku) {
 			if (cell instanceof EditableCell eCell) {
-				eCell.setMissingNumbersFirstTime();
+				eCell.setMissingNumbers();
 			}
 		}
 	}

@@ -67,22 +67,14 @@ public class EditableCell implements Cell{
 		return result;
 	}
 	
-	public void setMissingNumbersFirstTime() {
+	public void setMissingNumbers() {
 		this.possibleNumbers = this.getMissingNumbers();
 	}
 	
 	public void updateCell(Integer newNumber) {
-		if (this.possibleNumbers.contains(newNumber)) {
-			this.possibleNumbers.remove(newNumber);
-			if (this.possibleNumbers.size() == 1) {
-				this.isInstantSolvable = true;
-			}
-		}
-		else {
-			this.possibleNumbers.add(newNumber);
-			if (this.isInstantSolvable == true) {
-				this.isInstantSolvable = false;
-			}
+		this.possibleNumbers.remove(newNumber);
+		if (this.possibleNumbers.size() == 1) {
+			this.isInstantSolvable = true;
 		}
 	}
 	
@@ -100,7 +92,22 @@ public class EditableCell implements Cell{
 	
 	public void revokeGuess(Integer number) {
 		this.value = 0;
-		updateRelevantCells(number);
+		for (Cell cell : this.relevantRow) {
+			if (cell instanceof EditableCell eCell) {
+				eCell.setMissingNumbers();
+			}
+		}
+		for (Cell cell : this.relevantCol) {
+			if (cell instanceof EditableCell eCell) {
+				eCell.setMissingNumbers();
+			}
+		}
+		for (Cell cell : this.relevantGrid) {
+			if (cell instanceof EditableCell eCell) {
+			eCell.setMissingNumbers();
+			}
+		}
+		System.out.println("revoked Cell " + this.index + " with Value of " + this.value);
 	}
 	
 	private void updateRelevantCells(Integer number) {

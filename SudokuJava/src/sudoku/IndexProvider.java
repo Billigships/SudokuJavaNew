@@ -1,7 +1,7 @@
 package sudoku;
 
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class IndexProvider {
 	
@@ -82,35 +82,30 @@ public class IndexProvider {
 	//all this shit just to NOT include the Cell itself (index)
 	public static int[] getRowIndex(int index) {
 		int[] arr = IndexProvider.rowIndexMap.get(IndexProvider.rowIndex[index]);
-		return cutOutIndex(index, arr);
+		return cutOutIndex(arr, index);
 	}
 	
 	public static int[] getColIndex(int index) {
 		int[] arr = IndexProvider.colIndexMap.get(IndexProvider.colIndex[index]);
-		return cutOutIndex(index, arr);
+		return cutOutIndex(arr, index);
 	}
 	
 	public static int[] getGridIndex(int index) {
 		int[] arr = IndexProvider.gridIndexMap.get(IndexProvider.gridIndex[index]);
-		return cutOutIndex(index, arr);
+		return cutOutIndex(arr, index);
 	}
 
-	private static int[] cutOutIndex(int index, int[] arr) {
-		getIndex(arr, index);
-		int[] result = IntStream.range(0, arr.length)
-		        .filter(i -> i != index)
-		        .map(i -> arr[i])
-		        .toArray();
-		return result;
-	}
-	
-	private static Integer getIndex(int[] arr, int value) {
+	private static int[] cutOutIndex(int[] arr, int value) {
+		ArrayList<Integer> blub = new ArrayList<>();
 		for (int i = 0; i < arr.length; i++) {
-		    if (arr[i] == value) {
-		        Integer index = i;
-		        return index;
+		    if (arr[i] != value) {
+		    	blub.add(arr[i]);
 		    }
 		}
-		return null;
+		int[] result = new int[blub.size()];
+		for (int i = 0; i < blub.size(); i++) {
+		    result[i] = blub.get(i);
+		}
+		return result;
 	}
 }
