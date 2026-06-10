@@ -1,6 +1,7 @@
 package sudoku;
 
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class IndexProvider {
 	
@@ -76,4 +77,40 @@ public class IndexProvider {
 			7, new int[]{57, 58, 59, 66, 67, 68, 75, 76, 77},
 			8, new int[]{60, 61, 62, 69, 70, 71, 78, 79, 80}
 		);
+	
+	
+	//all this shit just to NOT include the Cell itself (index)
+	public static int[] getRowIndex(int index) {
+		int[] arr = IndexProvider.rowIndexMap.get(IndexProvider.rowIndex[index]);
+		return cutOutIndex(index, arr);
+	}
+	
+	public static int[] getColIndex(int index) {
+		int[] arr = IndexProvider.colIndexMap.get(IndexProvider.colIndex[index]);
+		return cutOutIndex(index, arr);
+	}
+	
+	public static int[] getGridIndex(int index) {
+		int[] arr = IndexProvider.gridIndexMap.get(IndexProvider.gridIndex[index]);
+		return cutOutIndex(index, arr);
+	}
+
+	private static int[] cutOutIndex(int index, int[] arr) {
+		getIndex(arr, index);
+		int[] result = IntStream.range(0, arr.length)
+		        .filter(i -> i != index)
+		        .map(i -> arr[i])
+		        .toArray();
+		return result;
+	}
+	
+	private static Integer getIndex(int[] arr, int value) {
+		for (int i = 0; i < arr.length; i++) {
+		    if (arr[i] == value) {
+		        Integer index = i;
+		        return index;
+		    }
+		}
+		return null;
+	}
 }
